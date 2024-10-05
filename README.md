@@ -34,7 +34,7 @@ Here's a walkthrough of implemented user stories:
 
 <!-- Replace this with whatever GIF tool you used! -->
 
-https://imgur.com/I4vOibA.gif
+![Video Walkthrough](./path/to/your/gif.gif)
 
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
