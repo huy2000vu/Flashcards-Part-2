@@ -18,6 +18,8 @@ function App() {
   const [currStreak, setCurrStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
 
+  const [currquestionIndex, setCurrQuestionIndex] = useState(0);
+
   // Function to handle streak update when the user submits their answer
   const handleAnswerSubmission = (isCorrect) => {
     if (isCorrect) {
@@ -33,19 +35,34 @@ function App() {
     }
   };
 
+  const prevQuestion = () => {
+    if (currquestionIndex !== 0) {
+      setCurrQuestionIndex(currquestionIndex - 1);
+      const newQuestion = questions[currquestionIndex];
+      const newAnswer = dinosaurTrivia[newQuestion];
+
+      // Update question and answer in state
+      setQuestion(newQuestion);
+      setAnswer(newAnswer);
+
+      // Ensure the card flips back to the front
+      setIsFlipped(false);
+    }
+  };
+
   function nextQuestion() {
-    // Generate a random question index
-    let randomQuestionIndex = Math.floor(Math.random() * numberofquestions);
+    if (currquestionIndex < question.length) {
+      setCurrQuestionIndex(currquestionIndex + 1);
+      const newQuestion = questions[currquestionIndex];
+      const newAnswer = dinosaurTrivia[newQuestion];
 
-    const newQuestion = questions[randomQuestionIndex];
-    const newAnswer = dinosaurTrivia[newQuestion];
+      // Update question and answer in state
+      setQuestion(newQuestion);
+      setAnswer(newAnswer);
 
-    // Update question and answer in state
-    setQuestion(newQuestion);
-    setAnswer(newAnswer);
-
-    // Ensure the card flips back to the front
-    setIsFlipped(false);
+      // Ensure the card flips back to the front
+      setIsFlipped(false);
+    }
   }
 
   return (
@@ -74,9 +91,15 @@ function App() {
         answer={answer}
         onAnswerSubmission={handleAnswerSubmission}
       />
-      <button className="nextBtn" onClick={nextQuestion}>
-        ➡️
-      </button>
+
+      <div className="questionButtons">
+        <button className="prevQuestionBtn" onClick={prevQuestion}>
+          ⬅️
+        </button>
+        <button className="nextBtn" onClick={nextQuestion}>
+          ➡️
+        </button>
+      </div>
     </div>
   );
 }
