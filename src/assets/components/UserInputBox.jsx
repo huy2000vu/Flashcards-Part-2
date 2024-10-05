@@ -1,42 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
-function useCheckUserGuess(userGuess, answer) {
-  const [isCorrect, setIsCorrect] = useState(null);
-
-  useEffect(() => {
-    if (userGuess && answer) {
-      if (userGuess.toLowerCase() === answer.toLowerCase()) {
-        setIsCorrect(true);
-      } else {
-        setIsCorrect(false);
-      }
-    }
-  }, [userGuess, answer]);
-
-  return isCorrect;
-}
-
-export default function UserInputBox({ question, answer }) {
+function UserInputBox({ question, answer, onAnswerSubmission }) {
   const [userGuess, setUserGuess] = useState("");
-  const isCorrect = useCheckUserGuess(userGuess, answer);
+  const [hasSubmit, setHasSubmit] = useState(false);
 
-  // Update the state as the user types
+  // Check if the guess is correct
+  const isCorrect = userGuess.toLowerCase() === answer.toLowerCase();
+
   const handleInputChange = (event) => {
     setUserGuess(event.target.value);
   };
 
-  // Handle the submit action when the button is clicked
   const handleSubmit = () => {
-    if (isCorrect !== null) {
-      console.log(isCorrect ? "correct" : `wrong, you're dumb`);
-    }
+    setHasSubmit(true);
+    // Call the onAnswerSubmission function with the result
+    onAnswerSubmission(isCorrect);
   };
 
   return (
     <div className="userInputDiv">
       <h1>Guess your answer here: </h1>
       <input
-        className="userInputBox"
+        className={`userInputBox ${
+          hasSubmit ? (isCorrect ? "correct" : "wrong") : ""
+        }`}
         type="text"
         value={userGuess}
         onChange={handleInputChange}
@@ -46,3 +33,5 @@ export default function UserInputBox({ question, answer }) {
     </div>
   );
 }
+
+export default UserInputBox;

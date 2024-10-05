@@ -63,3 +63,13 @@ body {
   align-items: center;
   gap: 5px;
 }
+
+.userInputBox.correct {
+  border: 2px solid green;
+  background-color: #d4edda;
+}
+
+.userInputBox.wrong {
+  border: 2px solid red;
+  background-color: #f8d7da;
+}
